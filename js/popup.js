@@ -1,10 +1,12 @@
 /**
- * 入口文件
+ * 在豆瓣话题页 例如https://www.douban.com/gallery/topic/43657/ 
+ * 在当前页面显示图片预览，而不是打开新的页面
  * @author t.zhou
  */
 
-const DELAY_TIME = 5000; //等待页面结构加载完成的延时
+const DELAY_TIME = 5000; //等待页面结构服务加载完成的延时 TODO：可以注入接口返回的时机
 var isShow = false; //弹层是否显示
+// var swiper = undefined; //swiper实例
 
 /**
  * 绑定每个图片的点击事件
@@ -39,8 +41,7 @@ function bindEvent(dom) {
 	$('body').on('click', function (evt) {
 		if (!isShow) return;
 
-		$('.swiper').hide();
-		isShow = false;
+		hideSwiper();
 	});
 }
 
@@ -55,14 +56,6 @@ function initSwiper() {
 	//创建弹层
 	var $wrapper = $('<div class="swiper" style="display:none;position: fixed;width: 80%;height: 60%;z-index: 3000;background-color: gray;top: 50%;left: 50%;margin-left: -40%;margin-top: -30%;"></div>');
 	$('body').append($wrapper);
-
-	//容器
-	var $swiperContainer = $('<div class="swiper-container" style="height: 100%;width:100%;"><div class="swiper-wrapper"></div></div>');
-	$('.swiper').append($swiperContainer);
-
-	//播放按钮
-	var str = `<div class="swiper-button-next"></div><div class="swiper-button-prev"></div>`;
-	$(".swiper-container").append($(str));
 }
 
 /**
@@ -75,6 +68,14 @@ function showSwiper(urls, index) {
 	$('.swiper').show();
 	isShow = true;
 
+	//容器
+	var $swiperContainer = $('<div class="swiper-container" style="height: 100%;width:100%;"><div class="swiper-wrapper"></div></div>');
+	$('.swiper').append($swiperContainer);
+
+	//播放按钮
+	var str = `<div class="swiper-button-next"></div><div class="swiper-button-prev"></div>`;
+	$(".swiper-container").append($(str));
+
 	for (let index = 0; index < urls.length; index++) {
 		str += `<div class="swiper-slide">
 			<img src="${urls[index]}" style="height: 100%">
@@ -86,16 +87,18 @@ function showSwiper(urls, index) {
 		navigation: {
 			nextEl: '.swiper-button-next',
 			prevEl: '.swiper-button-prev',
-		}
+		},
+		initialSlide: index
 	});
 }
 
 /**
  * 收起弹层
  */
-function hideSwiper(urls, index) {
+function hideSwiper() {
 	//关闭弹层 并消掉swiper-container
-	$('.swiper').remove('.swiper-container').hide();
+	$('.swiper').hide()
+	$('.swiper-container').remove();
 	isShow = false;
 }
 
