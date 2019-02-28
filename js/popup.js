@@ -5,7 +5,11 @@
  */
 
 const DELAY_TIME = 5000; //等待页面结构服务加载完成的延时 TODO：可以注入接口返回的时机
+const HD = 1; //高清大图
+const FHD = 2; //全高清大图
+
 var isShow = false; //弹层是否显示
+var ratio = HD;
 // var swiper = undefined; //swiper实例
 
 /**
@@ -27,10 +31,10 @@ function bindEvent(dom) {
 		//获得当前文章的所有图片链接
 		for (let index = 0; index < imgs.length; index++) {
 			const element = imgs[index];
-			urls.push($(element).attr('style').match(/http(\S)*jpg/g))
+			urls.push($(element).attr('style').match(/http(\S)*jpg/g)[0])
 		}
 
-		showSwiper(urls, index);
+		showSwiper(dourls(urls), index);
 	});
 
 	//绑定弹层关闭的事件
@@ -65,6 +69,7 @@ function showSwiper(urls, index) {
 	//TODO: 去展示弹层，并传入index
 	var str = '';
 
+	//展示弹层
 	$('.swiper').show();
 	isShow = true;
 
@@ -105,10 +110,24 @@ function hideSwiper() {
 /**
  * 处理图片链接（小图转大图）
  */
-function dourls(urls, index) {
-	//关闭弹层 并消掉swiper-container
-	$('.swiper').remove('.swiper-container').hide();
-	isShow = false;
+function dourls(urls) {
+	/**
+	 * 根据配置的图片分辨率逐项做URL处理
+	 * https://img3.doubanio.com/view/status/m/public/55165169-1f85dceb253be32.jpg
+	 * https://img1.doubanio.com/view/status/l/public/364c1a0fc6f448a.webp
+	 * https://img1.doubanio.com/view/status/raw/public/364c1a0fc6f448a.jpg
+	 */
+	for (let index = 0; index < urls.length; index++) {
+		urls[index] = urls[index].replace(/\/[m|l]\//, '/raw/').replace(/(\d)*-/, '');
+	}
+
+	if (ratio == HD) {
+		for (let index = 0; index < urls.length; index++) {
+			urls[index] = urls[index].replace(/\/raw\//, '/l/').replace(/\.jpg/, '.webp');
+		}
+	}
+
+	return urls;
 }
 
 
