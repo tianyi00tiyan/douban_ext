@@ -38,12 +38,14 @@ function initSwiper() {
 	$('head').append($linkTag);
 	
 	//创建弹层
-	var $wrapper = $('<div class="swiper" style="display:none;position: absolute;width: 80%;height: 60%;z-index: 3000;background-color: gray;top: 50%;left: 50%;margin-left: -40%;margin-top: -15%;"></div>');
+	var $wrapper = $('<div class="swiper" style="display:none;position: absolute;width: 80%;height: 60%;z-index: 3000;background-color: gray;top: 50%;left: 50%;margin-left: -40%;margin-top: -30%;"></div>');
 	$('body').append($wrapper);
 
+	//容器
 	var $swiperContainer = $('<div class="swiper-container" style="height: 100%;width:100%;"><div class="swiper-wrapper"></div></div>');
 	$('.swiper').append($swiperContainer);
 
+	//播放按钮
 	var str = `<div class="swiper-button-next"></div><div class="swiper-button-prev"></div>`;
 	$(".swiper-container").append($(str));
 }
@@ -55,32 +57,22 @@ function showSwiper(urls, index) {
 	//TODO: 去展示弹层，并传入index
 	var str = '';
 
-	
+	$('.swiper').show();
+	isShow = true;
 
 	for (let index = 0; index < urls.length; index++) {
-		str += `<div class="swiper-slide" style="width: 100%">
+		str += `<div class="swiper-slide">
 			<img src="${urls[index]}" style="height: 100%">
 		</div>`;
 	}
-	console.log(str);
 	$(".swiper-wrapper").append($(str));
 
-	
-
-	// setTimeout(function() {
-		var swiper = new Swiper('.swiper-container', {
-			navigation: {
-				nextEl: '.swiper-button-next',
-				prevEl: '.swiper-button-prev',
-			}
-		});
-		
-	
-		$('.swiper').show();
-		isShow = true;
-	// }, 5000)
-
-	
+	var swiper = new Swiper('.swiper-container', {
+		navigation: {
+			nextEl: '.swiper-button-next',
+			prevEl: '.swiper-button-prev',
+		}
+	});
 }
 
 /**
