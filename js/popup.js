@@ -118,7 +118,7 @@ function dourls(urls) {
 	 * https://img1.doubanio.com/view/status/raw/public/364c1a0fc6f448a.jpg
 	 */
 	for (let index = 0; index < urls.length; index++) {
-		urls[index] = urls[index].replace(/\/[m|l]\//, '/raw/').replace(/(\d)*-/, '');
+		urls[index] = urls[index].replace(/\/[m|s]\//, '/raw/').replace(/(\d)*-/, '');
 	}
 
 	if (ratio == HD) {
