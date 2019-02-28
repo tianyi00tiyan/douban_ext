@@ -17,16 +17,31 @@ function bindEvent(dom) {
 		let urls = [];
 		let tartget  = evt.currentTarget;
 		let index = $(tartget).index();
-		let imgs = $(tartget).parent().children();//
+		let imgs = $(tartget).parent().children();
 
+		//阻止事件冒泡
+		evt.stopPropagation();
+
+		//获得当前文章的所有图片链接
 		for (let index = 0; index < imgs.length; index++) {
 			const element = imgs[index];
 			urls.push($(element).attr('style').match(/http(\S)*jpg/g))
 		}
-		
 
 		showSwiper(urls, index);
-	})
+	});
+
+	//绑定弹层关闭的事件
+	$('.swiper').on('click', function (evt) {
+		//阻止事件冒泡
+		evt.stopPropagation();
+	});
+	$('body').on('click', function (evt) {
+		if (!isShow) return;
+
+		$('.swiper').hide();
+		isShow = false;
+	});
 }
 
 /**
@@ -38,7 +53,7 @@ function initSwiper() {
 	$('head').append($linkTag);
 	
 	//创建弹层
-	var $wrapper = $('<div class="swiper" style="display:none;position: absolute;width: 80%;height: 60%;z-index: 3000;background-color: gray;top: 50%;left: 50%;margin-left: -40%;margin-top: -30%;"></div>');
+	var $wrapper = $('<div class="swiper" style="display:none;position: fixed;width: 80%;height: 60%;z-index: 3000;background-color: gray;top: 50%;left: 50%;margin-left: -40%;margin-top: -30%;"></div>');
 	$('body').append($wrapper);
 
 	//容器
