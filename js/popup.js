@@ -4,13 +4,11 @@
  * @author t.zhou
  */
 
-const DELAY_TIME = 5000; //等待页面结构服务加载完成的延时 TODO：可以注入接口返回的时机
 const HD = 1; //高清大图
 const FHD = 2; //全高清大图
 
 var isShow = false; //弹层是否显示
-var ratio = FHD;
-// var swiper = undefined; //swiper实例
+var ratio = FHD; //图片质量
 
 /**
  * 绑定每个图片的点击事件
@@ -151,16 +149,10 @@ function main () {
 }
 
 /**
- * 等待页面结构加载完成再执行main()
+ * 等待服务加载完成再执行main()
  */
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
-	if(message == 'onCompleted'){
-		console.log("done");
-		// main();
-		sendResponse('Hello from background.');
-	}
-	// return Promise.resolve("Dummy response to keep the console quiet");
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	if (request.status == "onCompleted") {
+		main();
+	}		
 });
-// setTimeout(function(){
-// 	main();
-// }, DELAY_TIME);
