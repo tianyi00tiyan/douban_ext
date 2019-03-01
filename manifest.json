@@ -1,6 +1,6 @@
 {
    "browser_action": {
-      "default_icon": "images/19.png",
+      "default_icon": "images/128.png",
       "default_popup": "popup.html",
       "default_title": "豆瓣"
    },
@@ -10,12 +10,9 @@
       "matches": [ "http://*/*", "https://*/*" ],
       "run_at": "document_end"
    } ],
-   "default_locale": "en",
    "description": "豆瓣的话题页点击图片显示弹层，不需要跳转打开新的页面",
    "icons": {
-      "128": "images/128.png",
-      "16": "images/16.png",
-      "48": "images/128.png"
+      "128": "images/128.png"
    },
    "manifest_version": 2,
    "name": "豆瓣",
