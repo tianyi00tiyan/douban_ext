@@ -64,9 +64,6 @@ function initSwiper() {
  * 展示弹层
  */
 function showSwiper(urls, index) {
-	//TODO: 去展示弹层，并传入index
-	var str = '';
-
 	//展示弹层
 	$('.swiper').show();
 	isShow = true;
@@ -79,6 +76,7 @@ function showSwiper(urls, index) {
 	var str = `<div class="swiper-button-next"></div><div class="swiper-button-prev"></div>`;
 	$(".swiper-container").append($(str));
 
+	var str = '';
 	for (let index = 0; index < urls.length; index++) {
 		str += `<div class="swiper-slide" style="display: flex;justify-content: center;">
 			<img src="${urls[index]}" style="height: 100%">
