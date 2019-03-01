@@ -1,6 +1,11 @@
 /**
  * 在豆瓣话题页 例如https://www.douban.com/gallery/topic/43657/ 
  * 在当前页面显示图片预览，而不是打开新的页面
+ * 
+ * TODO：
+ * 1.增加popup弹窗 可以选择图片分辨率和是否使用工具
+ * 2.增加适用场景
+ * 
  * @author t.zhou
  */
 
