@@ -2,7 +2,7 @@
    "browser_action": {
       "default_icon": "images/19.png",
       "default_popup": "popup.html",
-      "default_title": "__MSG_extname__"
+      "default_title": "豆瓣"
    },
    "content_scripts": [ {
       "all_frames": true,
@@ -11,14 +11,18 @@
       "run_at": "document_end"
    } ],
    "default_locale": "en",
-   "description": "__MSG_description__",
+   "description": "豆瓣的话题页点击图片显示弹层，不需要跳转打开新的页面",
    "icons": {
       "128": "images/128.png",
       "16": "images/16.png",
       "48": "images/128.png"
    },
    "manifest_version": 2,
-   "name": "__MSG_extname__",
-   "permissions": [ "tabs", "http://*/*", "https://*/*", "contextMenus" ],
-   "version": "1.0.1.1"
+   "name": "豆瓣",
+   "permissions": [ "webRequest","webRequestBlocking", "http://*/*", "https://*/*", "contextMenus" ],
+   "version": "1.0.1.1",
+   "background": {
+      "scripts": ["js/bgp.js"],
+      "persistent": true
+   }
 }

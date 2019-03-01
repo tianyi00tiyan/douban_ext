@@ -153,6 +153,14 @@ function main () {
 /**
  * 等待页面结构加载完成再执行main()
  */
-setTimeout(function(){
-	main();
-}, DELAY_TIME);
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
+	if(message == 'onCompleted'){
+		console.log("done");
+		// main();
+		sendResponse('Hello from background.');
+	}
+	// return Promise.resolve("Dummy response to keep the console quiet");
+});
+// setTimeout(function(){
+// 	main();
+// }, DELAY_TIME);
