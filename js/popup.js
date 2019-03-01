@@ -3,7 +3,7 @@
  * 在当前页面显示图片预览，而不是打开新的页面
  * 
  * TODO：
- * 1.增加popup弹窗 可以选择图片分辨率和是否使用工具
+ * 1.增加popup弹窗 可以选择图片分辨率,是否使用工具,展示布局（带文字）
  * 2.增加适用场景
  * 
  * @author t.zhou
@@ -13,7 +13,7 @@ const HD = 1; //高清大图
 const FHD = 2; //全高清大图
 
 var isShow = false; //弹层是否显示
-var ratio = FHD; //图片质量
+var ratio = HD; //图片质量
 
 /**
  * 绑定每个图片的点击事件
@@ -61,7 +61,7 @@ function initSwiper() {
 	$('head').append($linkTag);
 	
 	//创建弹层
-	var $wrapper = $('<div class="swiper" style="display:none;position: fixed;width: 80%;height: 80%;z-index: 3000;background-color: black;top: 50%;left: 50%;margin-left: -40%;margin-top: -20%;"></div>');
+	var $wrapper = $('<div class="swiper" style="display:none;position: fixed;width: 80%;height: 90%;z-index: 3000;background-color: black;top: 50%;left: 50%;margin-left: -40%;margin-top: -25%;"></div>');
 	$('body').append($wrapper);
 }
 
@@ -74,7 +74,7 @@ function showSwiper(urls, index) {
 	isShow = true;
 
 	//容器
-	var $swiperContainer = $('<div class="swiper-container" style="height: 80%;width:100%;margin-top: 5%;"><div class="swiper-wrapper"></div></div>');
+	var $swiperContainer = $('<div class="swiper-container" style="height: 90%;width:100%;margin-top:5%"><div class="swiper-wrapper"></div></div>');
 	$('.swiper').append($swiperContainer);
 
 	//播放按钮
