@@ -4,7 +4,8 @@
  * 
  * TODO：
  * 1.增加popup弹窗 可以选择图片分辨率,是否使用工具,展示布局（带文字）
- * 2.增加适用场景
+ * 2.增加按钮打开新的页面来实现话题内所有图片的一次浏览
+ * 3.增加适用场景
  * 
  * @author t.zhou
  */
@@ -13,7 +14,8 @@ const HD = 1; //高清大图
 const FHD = 2; //全高清大图
 
 var isShow = false; //弹层是否显示
-var ratio = HD; //图片质量
+var curRatio = HD; //图片质量
+var canUse = true; //是否使用插件
 
 /**
  * 绑定每个图片的点击事件
@@ -28,8 +30,9 @@ function bindEvent(dom) {
 		let index = $(tartget).index();
 		let imgs = $(tartget).parent().children();
 
-		//阻止事件冒泡
+		//阻止事件冒泡和<a>标签默认行为
 		evt.stopPropagation();
+		evt.preventDefault();
 
 		//获得当前文章的所有图片链接
 		for (let index = 0; index < imgs.length; index++) {
@@ -122,7 +125,7 @@ function dourls(urls) {
 		urls[index] = urls[index].replace(/\/[m|s]\//, '/raw/').replace(/(\d)*-/, '');
 	}
 
-	if (ratio == HD) {
+	if (curRatio == HD) {
 		for (let index = 0; index < urls.length; index++) {
 			urls[index] = urls[index].replace(/\/raw\//, '/l/').replace(/\.jpg/, '.webp');
 		}
@@ -143,8 +146,7 @@ function main () {
 	let dom = $("ul.status-pics");
 
 	//重置移除掉原来的跳转链接
-	if (dom.length) {
-		dom.parent().removeAttr('href');
+	if (dom.length && canUse) {
 		bindEvent(dom);
 	}
 
