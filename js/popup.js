@@ -12,6 +12,12 @@
 
 const HD = 1; //高清大图
 const FHD = 2; //全高清大图
+const WINDOW_WIDTH = window.screen.availWidth; //网页可见区域宽高
+const WINDOW_HEIGHT = window.screen.availHeight; 
+const WIDTH = WINDOW_WIDTH * 0.8; //弹层的宽高
+const HEIGHT = WINDOW_HEIGHT * 0.8;
+const SWIPER_WIDTH = WIDTH; //SWIPER的宽高
+const SWIPER_HEIGH = HEIGHT * 0.9; //SWIPER弹层的宽高
 
 var isShow = false; //弹层是否显示
 var curRatio = HD; //图片质量
@@ -64,7 +70,7 @@ function initSwiper() {
 	$('head').append($linkTag);
 	
 	//创建弹层
-	var $wrapper = $('<div class="swiper" style="display:none;position: fixed;width: 80%;height: 90%;z-index: 3000;background-color: black;top: 50%;left: 50%;margin-left: -40%;margin-top: -25%;"></div>');
+	var $wrapper = $(`<div class="swiper" style="display:none;position: fixed;width: ${WIDTH}px;height: ${HEIGHT}px;z-index: 3000;background-color: black;top: 50%;left: 50%;margin-left: -40%;margin-top: ${-HEIGHT/2}px;"></div>`);
 	$('body').append($wrapper);
 }
 
@@ -77,7 +83,7 @@ function showSwiper(urls, index) {
 	isShow = true;
 
 	//容器
-	var $swiperContainer = $('<div class="swiper-container" style="height: 90%;width:100%;margin-top:5%"><div class="swiper-wrapper"></div></div>');
+	var $swiperContainer = $(`<div class="swiper-container" style="height:${SWIPER_HEIGH}px;width:${SWIPER_WIDTH}px;margin-top:${(HEIGHT - SWIPER_HEIGH)/2}px"><div class="swiper-wrapper"></div></div>`);
 	$('.swiper').append($swiperContainer);
 
 	//播放按钮
