@@ -68,6 +68,11 @@ function bindEvent(dom) {
  * 初始化滑动播放的窗体
  */
 function initSwiper() {
+	//如果有就不需要重复绘制
+	if ($('.swiper').length) {
+		return
+	}
+
 	//引入样式
 	var $linkTag = $('<link href="https://www.swiper.com.cn/dist/css/swiper.min.css" rel="stylesheet" type="text/css" charset="utf-8"/>');
 	$('head').append($linkTag);
