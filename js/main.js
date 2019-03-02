@@ -167,13 +167,13 @@ function main () {
  */
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	switch (request.type) {
-		case "onCompleted":
+		case "BG.onCompleted":
 			main();
 			break;
-		case "canUse":
+		case "BG.canUse":
 			canUse = request.value;
 			break;
-		case "curRatio":
+		case "BG.curRatio":
 			curRatio = request.value;
 			break;
 		default:

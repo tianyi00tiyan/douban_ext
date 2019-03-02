@@ -19,7 +19,7 @@
    "permissions": [ "webRequest","webRequestBlocking", "tabs", "http://*/*", "https://*/*", "contextMenus" ],
    "version": "1.0.0",
    "background": {
-      "scripts": ["js/bgp.js"],
+      "scripts": ["js/background.js"],
       "persistent": true
    }
 }
