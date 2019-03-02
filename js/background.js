@@ -7,17 +7,6 @@ var curRatio = HD; //图片质量
 var canUse = true; //是否使用插件
 
 /**
- * 初始化
- */
-function init() {
-    //通知给前台当前canUse状态
-    sendMessage("BG.canUse", canUse);
-
-    //通知给前台当前canUse状态
-    sendMessage("BG.curRatio", curRatio);
-}
-
-/**
  * 绑定事件
  */
 function bindEvent() {
@@ -26,6 +15,13 @@ function bindEvent() {
      * Request URL: https://m.douban.com/rexxar/api/v2/gallery/topic/54054/items?sort=hot&start=0&count=20&status_full_text=1&guest_only=0&ck=q6_u
      */
     chrome.webRequest.onCompleted.addListener(function(details) {
+            //通知给前台当前canUse状态
+            sendMessage("BG.canUse", canUse);
+
+            //通知给前台当前curRatio状态
+            sendMessage("BG.curRatio", curRatio);
+
+            //通知加载完毕
             sendMessage("BG.onCompleted");
         },
         {urls: [ "https://m.douban.com/rexxar/api/v2/gallery/topic/*" ]}
@@ -45,7 +41,6 @@ function sendMessage(type, value) {
  * 入口函数
  */
 function background() {
-    init();
     bindEvent();
 }
 

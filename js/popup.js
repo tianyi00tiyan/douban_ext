@@ -22,7 +22,7 @@ function bindEvent() {
     //绑定ratioBtn点击事件
     $('#ratioBtn').on('click', function (evt) {
         console.log("ratioBtn");
-        BG.curRatio = BG.curRatio == BG.HD ? BG.FHD : BG.FHD;
+        BG.curRatio = BG.curRatio == BG.HD ? BG.FHD : BG.HD;
         BG.sendMessage("BG.curRatio", BG.curRatio);
         render();
     })

@@ -106,7 +106,9 @@ function showSwiper(urls, index) {
 			nextEl: '.swiper-button-next',
 			prevEl: '.swiper-button-prev',
 		},
-		initialSlide: index
+		initialSlide: index,
+		mousewheel: true
+
 	});
 }
 
@@ -158,14 +160,13 @@ function main () {
 	if (dom.length) {
 		bindEvent(dom);
 	}
-
-	console.log("done")
 }
 
 /**
  * 等待服务加载完成再执行main()
  */
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	console.log(request)
 	switch (request.type) {
 		case "BG.onCompleted":
 			main();
