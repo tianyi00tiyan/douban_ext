@@ -1,5 +1,5 @@
-//获得BG
-const BG = chrome.extension.getBackgroundPage();
+const BG = chrome.extension.getBackgroundPage(); //获得BG
+const ALL_TABS = true; //是否所有的tab都要通知
 
 /**
  * 初始化界面
@@ -15,7 +15,7 @@ function bindEvent() {
     //绑定BG.canUseBtn点击事件
     $('#canUseBtn').on('click', function (evt) {
         BG.canUse = !BG.canUse;
-        BG.sendMessage("BG.canUse", BG.canUse);
+        BG.sendMessage("BG.canUse", BG.canUse, ALL_TABS);
         render();
     })
 
@@ -23,7 +23,7 @@ function bindEvent() {
     $('#ratioBtn').on('click', function (evt) {
         console.log("ratioBtn");
         BG.curRatio = BG.curRatio == BG.HD ? BG.FHD : BG.HD;
-        BG.sendMessage("BG.curRatio", BG.curRatio);
+        BG.sendMessage("BG.curRatio", BG.curRatio, ALL_TABS);
         render();
     })
 }

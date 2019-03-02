@@ -31,10 +31,19 @@ function bindEvent() {
 /**
  * 向前台发送消息
  */
-function sendMessage(type, value) {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {type: type, value: value});
-    });
+function sendMessage(type, value, allTabs) {
+    if (!allTabs) {
+        //是否所有的tab都要通知
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {type: type, value: value});
+        });
+    } else {
+        chrome.tabs.query({url: "https://www.douban.com/gallery/topic/*" }, function(tabs) {
+            for (let index = 0; index < tabs.length; index++) {
+                chrome.tabs.sendMessage(tabs[index].id, {type: type, value: value});
+            }
+        });
+    }
 }
 
 /**
