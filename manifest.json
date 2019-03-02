@@ -2,22 +2,22 @@
    "browser_action": {
       "default_icon": "images/128.png",
       "default_popup": "popup.html",
-      "default_title": "豆瓣"
+      "default_title": "豆瓣访问助手"
    },
    "content_scripts": [ {
       "all_frames": true,
-      "js": [ "js/jquery-1.7.1.min.js", "js/swiper.min.js", "js/popup.js" ],
+      "js": [ "js/jquery-1.7.1.min.js", "js/swiper.min.js", "js/main.js" ],
       "matches": [ "http://*/*", "https://*/*" ],
       "run_at": "document_end"
    } ],
-   "description": "豆瓣的话题页点击图片显示弹层，不需要跳转打开新的页面",
+   "description": "优化豆瓣的体验 1.豆瓣的话题页点击图片显示弹层，不需要跳转打开新的页面才能查看图片",
    "icons": {
       "128": "images/128.png"
    },
    "manifest_version": 2,
-   "name": "豆瓣",
+   "name": "豆瓣访问助手",
    "permissions": [ "webRequest","webRequestBlocking", "tabs", "http://*/*", "https://*/*", "contextMenus" ],
-   "version": "1.0.1.1",
+   "version": "1.0.0",
    "background": {
       "scripts": ["js/bgp.js"],
       "persistent": true
