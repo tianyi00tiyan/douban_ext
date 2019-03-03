@@ -86,6 +86,11 @@ function initSwiper() {
  * 展示弹层
  */
 function showSwiper(urls, index) {
+	//判断当前是否有弹层展示,有则移除
+	if (isShow) {
+		hideSwiper();
+	}
+
 	//展示弹层
 	$('.swiper').show();
 	isShow = true;
