@@ -10,6 +10,7 @@ var canUse = true; //是否使用插件
  * 绑定事件
  */
 function bindEvent() {
+    onMessage();
     /**
      * 监听网络请求和发送网络请求完毕信号
      * Request URL: https://m.douban.com/rexxar/api/v2/gallery/topic/54054/items?sort=hot&start=0&count=20&status_full_text=1&guest_only=0&ck=q6_u
@@ -44,6 +45,24 @@ function sendMessage(type, value, allTabs) {
             }
         });
     }
+}
+
+/**
+ * 接收前台的消息
+ */
+function onMessage() {
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        console.log(request)
+        switch (request.type) {
+            case "M.createTab":
+                chrome.tabs.create({
+                    url: request.value
+                });
+                break;
+            default:
+                break;
+        }
+    });
 }
 
 /**

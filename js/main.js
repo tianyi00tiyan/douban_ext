@@ -62,6 +62,16 @@ function bindEvent(dom) {
 
 		hideSwiper();
 	});
+
+	//绑定topic-title的点击事件，来打开新的Tab
+	$(".topic-title").click(function(evt) {
+		var hash = window.location.hash;
+		var id = chrome.runtime.id;
+		var htmlPage = '/gallery.html';
+		var tabUrl = 'chrome-extension://' + id + htmlPage;
+
+		sendMessage("M.createTab", tabUrl + hash);
+	})
 }
 
 /**
@@ -155,12 +165,21 @@ function dourls(urls) {
 	return urls;
 }
 
+/**
+ * 向后台发送消息
+ */
+function sendMessage(type, value) {
+    chrome.runtime.sendMessage(
+		{type: type, value: value}
+	)
+}
+
 
 /**
  * 从主函数main开始执行
  */
 function main () {
-	//初始化
+	//初始化Swiper
 	initSwiper();
 
 	//可操作的DOM
