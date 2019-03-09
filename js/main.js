@@ -166,6 +166,42 @@ function dourls(urls) {
 }
 
 /**
+ * 获取
+ */
+function getGallery() {
+	let param = {
+		ck: "q6_u" || get_cookie("ck"),
+		sort: "hot",
+		start: 0,
+		count: 200,
+		status_full_text: 0,
+		guest_only: 0
+	};
+
+	let url = "https://m.douban.com/rexxar/api/v2/gallery/topic/39565/items";
+	
+	ajax(param, url, function (res) {
+		console.log(res)
+	})
+}
+
+/**
+ * ajax发送请求
+ */
+function ajax(param, url, success, error) {
+	$.ajax({
+		url: url,
+		type: 'get',
+		data: param,
+		dataType: "json",
+		contentType: "application/x-www-form-urlencoded",
+		traditional: true,
+		success: success,
+		error: error
+	})
+}
+
+/**
  * 向后台发送消息
  */
 function sendMessage(type, value) {
@@ -181,6 +217,8 @@ function sendMessage(type, value) {
 function main () {
 	//初始化Swiper
 	initSwiper();
+
+	// getGallery();
 
 	//可操作的DOM
 	let dom = $("ul.status-pics");
