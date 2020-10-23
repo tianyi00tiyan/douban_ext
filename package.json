@@ -1,0 +1,15 @@
+{
+  "name": "starscape_kol_recruit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prettier": "prettier \"**/*.+(js|json|scss|css|less|ts)\"",
+    "format": "npm run prettier -- --write"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.7",
+    "prettier": "^2.0.5"
+  }
+}
