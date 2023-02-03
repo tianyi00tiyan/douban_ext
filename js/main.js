@@ -1,14 +1,3 @@
-/**
- * 在豆瓣话题页 例如https://www.douban.com/gallery/topic/43657/ 
- * 在当前页面显示图片预览，而不是打开新的页面
- * 
- * TODO：
- * 1.增加popup弹窗 可以选择图片分辨率,是否使用工具,展示布局
- * 2.增加按钮打开新的页面来实现话题内所有图片的一次浏览（带文字）
- * 3.增加适用场景
- * 
- * @author t.zhou
- */
 const HD = 1; //高清大图
 const FHD = 2; //全高清大图
 const WINDOW_WIDTH = window.screen.availWidth; //网页可见区域宽高
@@ -30,9 +19,9 @@ function bindEvent(dom) {
 
 	//为每一个图片绑定点击事件
 	children.on("click", function (evt) {
-		if (!canUse) {
-			return;
-		}
+		// if (!canUse) {
+		// 	return;
+		// }
 
 		let urls = [];
 		let tartget  = evt.currentTarget;
@@ -46,7 +35,7 @@ function bindEvent(dom) {
 		//获得当前文章的所有图片链接
 		for (let index = 0; index < imgs.length; index++) {
 			const element = imgs[index];
-			urls.push($(element).attr('style').match(/http(\S)*jpg/g)[0])
+			urls.push($(element).attr('data-url'))
 		}
 
 		showSwiper(dourls(urls), index);
@@ -74,7 +63,7 @@ function initSwiper() {
 	}
 
 	//引入样式
-	var $linkTag = $('<link href="https://www.swiper.com.cn/dist/css/swiper.min.css" rel="stylesheet" type="text/css" charset="utf-8"/>');
+	var $linkTag = $('<link href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" rel="stylesheet" type="text/css" charset="utf-8"/>');
 	$('head').append($linkTag);
 	
 	//创建弹层
@@ -111,14 +100,13 @@ function showSwiper(urls, index) {
 	}
 	$(".swiper-wrapper").append($(str));
 
-	var swiper = new Swiper('.swiper-container', {
+	new Swiper('.swiper-container', {
 		navigation: {
 			nextEl: '.swiper-button-next',
 			prevEl: '.swiper-button-prev',
 		},
-		initialSlide: index,
+		initialSlide: 0,
 		mousewheel: true
-
 	});
 }
 
@@ -128,7 +116,7 @@ function showSwiper(urls, index) {
 function hideSwiper() {
 	//关闭弹层 并消掉swiper-container
 	$('.swiper').hide()
-	$('.swiper-container').remove();
+	$('.swiper-container');
 	isShow = false;
 }
 
@@ -138,21 +126,14 @@ function hideSwiper() {
 function dourls(urls) {
 	/**
 	 * 根据配置的图片分辨率逐项做URL处理
-	 * https://img3.doubanio.com/view/status/m/public/55165169-1f85dceb253be32.jpg
-	 * https://img1.doubanio.com/view/status/l/public/364c1a0fc6f448a.webp
-	 * https://img1.doubanio.com/view/status/raw/public/364c1a0fc6f448a.jpg
+	 * https://note.mafengwo.net/img/37/ca/2566d645637cf38415d25d4d0501c74c.jpeg
 	 */
 	for (let index = 0; index < urls.length; index++) {
-		urls[index] = urls[index].replace(/\/[m|s]\//, '/raw/').replace(/(\d)*-/, '');
+		urls[index] = urls[index] && urls[index].replace(/\?\S*/, '')
 	}
 
-	if (curRatio == HD) {
-		for (let index = 0; index < urls.length; index++) {
-			urls[index] = urls[index].replace(/\/raw\//, '/l/').replace(/\.jpg/, '.webp');
-		}
-	}
-
-	return urls;
+	console.log(urls);
+	return urls.filter(item => !!item);
 }
 
 
@@ -164,7 +145,7 @@ function main () {
 	initSwiper();
 
 	//可操作的DOM
-	let dom = $("ul.status-pics");
+	let dom = $("ul._j_thumb_list");
 
 	//重置移除掉原来的跳转链接
 	if (dom.length) {
@@ -172,22 +153,6 @@ function main () {
 	}
 }
 
-/**
- * 等待服务加载完成再执行main()
- */
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	console.log(request)
-	switch (request.type) {
-		case "BG.onCompleted":
-			main();
-			break;
-		case "BG.canUse":
-			canUse = request.value;
-			break;
-		case "BG.curRatio":
-			curRatio = request.value;
-			break;
-		default:
-			break;
-	}
-});
+setTimeout(function () {
+	main();
+}, 1000);
