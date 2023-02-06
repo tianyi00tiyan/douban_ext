@@ -10,6 +10,7 @@ const SWIPER_HEIGH = HEIGHT * 0.9;
 var isShow = false; //弹层是否显示
 var curRatio = HD; //图片质量
 var canUse = true; //是否使用插件
+var curIndex = 0; //当前图片的索引
 
 /**
  * 绑定每个图片的点击事件
@@ -100,14 +101,22 @@ function showSwiper(urls, index) {
 	}
 	$(".swiper-wrapper").append($(str));
 
-	new Swiper('.swiper-container', {
+	document.removeEventListener('keydown', onKeydown);
+	var swiper = new Swiper('.swiper-container', {
 		navigation: {
 			nextEl: '.swiper-button-next',
 			prevEl: '.swiper-button-prev',
 		},
-		initialSlide: 0,
-		mousewheel: true
+		initialSlide: curIndex,
+		mousewheel: true,
+		on: {
+			slideChange: function () {
+				curIndex = this.activeIndex;
+			},
+		},
 	});
+
+	document.addEventListener('keydown', (event) => onKeydown(event, swiper));
 }
 
 /**
@@ -119,6 +128,29 @@ function hideSwiper() {
 	$('.swiper-container');
 	isShow = false;
 }
+
+/**
+ * 收起弹层
+ */
+function onKeydown(event, swiper2) {
+	console.log("dada", event.key, "dadsa");
+
+	if (event.defaultPrevented) {
+		return; // 如果事件已经在进行中，则不做任何事。
+	}
+
+	const keyName = event.key;
+
+	if (keyName === ' ') {
+		// do not alert when only Control key is pressed.
+		swiper2.slideNext();
+
+		// 取消默认动作，从而避免处理两次。
+		event.preventDefault();
+	}
+}
+
+	
 
 /**
  * 处理图片链接（小图转大图）
