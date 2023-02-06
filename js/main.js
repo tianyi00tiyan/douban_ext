@@ -141,7 +141,7 @@ function onKeydown(event, swiper2) {
 
 	const keyName = event.key;
 
-	if (keyName === ' ' || keyName === 'ArrowRight' || keyName === 'ArrowDown') {
+	if (keyName === ' ' || keyName === 'ArrowDown') {
 		// do not alert when only Control key is pressed.
 		swiper2.slideNext();
 
@@ -149,7 +149,7 @@ function onKeydown(event, swiper2) {
 		event.preventDefault();
 	}
 
-	if (keyName === 'ArrowLeft' || keyName === 'ArrowUp') {
+	if (keyName === 'ArrowUp') {
 		// do not alert when only Control key is pressed.
 		swiper2.slidePrev();
 
