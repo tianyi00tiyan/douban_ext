@@ -141,9 +141,17 @@ function onKeydown(event, swiper2) {
 
 	const keyName = event.key;
 
-	if (keyName === ' ') {
+	if (keyName === ' ' || keyName === 'ArrowRight' || keyName === 'ArrowDown') {
 		// do not alert when only Control key is pressed.
 		swiper2.slideNext();
+
+		// 取消默认动作，从而避免处理两次。
+		event.preventDefault();
+	}
+
+	if (keyName === 'ArrowLeft' || keyName === 'ArrowUp') {
+		// do not alert when only Control key is pressed.
+		swiper2.slidePrev();
 
 		// 取消默认动作，从而避免处理两次。
 		event.preventDefault();
