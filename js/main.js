@@ -5,41 +5,31 @@ const WINDOW_HEIGHT = window.screen.availHeight;
 const WIDTH = WINDOW_WIDTH * 0.8; //弹层的宽高
 const HEIGHT = WINDOW_HEIGHT * 0.8;
 const SWIPER_WIDTH = WIDTH; //SWIPER的宽高
-const SWIPER_HEIGH = HEIGHT * 0.9;
+const SWIPER_HEIGH = HEIGHT;
 
 var isShow = false; //弹层是否显示
-var curRatio = HD; //图片质量
-var canUse = true; //是否使用插件
 var curIndex = 0; //当前图片的索引
 
 /**
  * 绑定每个图片的点击事件
  */
-function bindEvent(dom) {
-	let children = dom.children();
-
+function bindEvent(doms) {
 	//为每一个图片绑定点击事件
-	children.on("click", function (evt) {
-		// if (!canUse) {
-		// 	return;
-		// }
-
+	doms.on("click", function (evt) {
 		let urls = [];
 		let tartget  = evt.currentTarget;
-		let index = $(tartget).index();
-		let imgs = $(tartget).parent().children();
+		let tartgetImage = $(tartget).attr('data-original');
 
-		//阻止事件冒泡和<a>标签默认行为
 		evt.stopPropagation();
 		evt.preventDefault();
 
-		//获得当前文章的所有图片链接
-		for (let index = 0; index < imgs.length; index++) {
-			const element = imgs[index];
-			urls.push($(element).attr('data-url'))
+		for (let index = 0; index < doms.length; index++) {
+			const element = doms[index];
+			urls.push($(element).attr('data-original'))
 		}
 
-		showSwiper(dourls(urls), index);
+		curIndex = urls.indexOf(tartgetImage);
+		showSwiper(dourls(urls));
 	});
 
 	//绑定弹层关闭的事件
@@ -75,7 +65,7 @@ function initSwiper() {
 /**
  * 展示弹层
  */
-function showSwiper(urls, index) {
+function showSwiper(urls) {
 	//判断当前是否有弹层展示,有则移除
 	if (isShow) {
 		hideSwiper();
@@ -86,7 +76,11 @@ function showSwiper(urls, index) {
 	isShow = true;
 
 	//容器
-	var $swiperContainer = $(`<div class="swiper-container" style="height:${SWIPER_HEIGH}px;width:${SWIPER_WIDTH}px;margin-top:${(HEIGHT - SWIPER_HEIGH)/2}px"><div class="swiper-wrapper"></div></div>`);
+	var $swiperContainer = $(`
+		<div class="swiper-container" style="height:${SWIPER_HEIGH}px;width:${SWIPER_WIDTH}px;margin-top:${(HEIGHT - SWIPER_HEIGH)/2}px">
+			<div class="swiper-current" style="font-size: 16px;color: #fff;padding: 50px 50px;"></div>
+			<div class="swiper-wrapper"></div>
+		</div>`);
 	$('.swiper').append($swiperContainer);
 
 	//播放按钮
@@ -109,9 +103,13 @@ function showSwiper(urls, index) {
 		},
 		initialSlide: curIndex,
 		mousewheel: true,
+		lazy: {
+			loadPrevNext: true,
+		},
 		on: {
 			slideChange: function () {
 				curIndex = this.activeIndex;
+				$('.swiper-current').text(`${curIndex + 1}/${urls.length}`);
 			},
 		},
 	});
@@ -172,7 +170,7 @@ function dourls(urls) {
 		urls[index] = urls[index] && urls[index].replace(/\?\S*/, '')
 	}
 
-	console.log(urls);
+	// console.log(urls);
 	return urls.filter(item => !!item);
 }
 
@@ -185,7 +183,7 @@ function main () {
 	initSwiper();
 
 	//可操作的DOM
-	let dom = $("ul._j_thumb_list");
+	let dom = $(".photoTemplate img");
 
 	//重置移除掉原来的跳转链接
 	if (dom.length) {
