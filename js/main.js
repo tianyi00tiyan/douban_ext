@@ -78,7 +78,7 @@ function showSwiper(urls) {
 	//容器
 	var $swiperContainer = $(`
 		<div class="swiper-container" style="height:${SWIPER_HEIGH}px;width:${SWIPER_WIDTH}px;margin-top:${(HEIGHT - SWIPER_HEIGH)/2}px">
-			<div class="swiper-current" style="font-size: 16px;color: #fff;padding: 50px 50px;"></div>
+			<div class="swiper-current" style="font-size: 16px;color: #fff;position: absolute;top: 50px;left: 50px;"></div>
 			<div class="swiper-wrapper"></div>
 		</div>`);
 	$('.swiper').append($swiperContainer);
