@@ -2,8 +2,8 @@ const HD = 1; //高清大图
 const FHD = 2; //全高清大图
 const WINDOW_WIDTH = window.screen.availWidth; //网页可见区域宽高
 const WINDOW_HEIGHT = window.screen.availHeight; 
-const WIDTH = WINDOW_WIDTH * 0.8; //弹层的宽高
-const HEIGHT = WINDOW_HEIGHT * 0.8;
+const WIDTH = WINDOW_WIDTH; //弹层的宽高
+const HEIGHT = WINDOW_HEIGHT;
 const SWIPER_WIDTH = WIDTH; //SWIPER的宽高
 const SWIPER_HEIGH = HEIGHT;
 
@@ -58,7 +58,7 @@ function initSwiper() {
 	$('head').append($linkTag);
 	
 	//创建弹层
-	var $wrapper = $(`<div class="swiper" style="display:none;position: fixed;width: ${WIDTH}px;height: ${HEIGHT}px;z-index: 3000;background-color: black;top: 50%;left: 50%;margin-left: -40%;margin-top: ${-HEIGHT/2}px;"></div>`);
+	var $wrapper = $(`<div class="swiper" style="display:none;position: fixed;width: ${WIDTH}px;height: ${HEIGHT}px;z-index: 3000;background-color: black;top: 50%;left: 50%;margin-left:${-WIDTH/2}px;margin-top: ${-HEIGHT/2}px;"></div>`);
 	$('body').append($wrapper);
 }
 
